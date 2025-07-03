@@ -1,0 +1,5 @@
+en:
+  welcome:
+    message: Hello World
+  buttons:
+      save: Save
