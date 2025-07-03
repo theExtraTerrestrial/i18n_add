@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.1.1] - 2025-07-03
+
+- Add contributing guidelines and development documentation
+- Add version management Rake tasks
+- Document conventional commit format and release process
+
 ## [0.1.0] - 2025-07-03
 
 - Initial release
