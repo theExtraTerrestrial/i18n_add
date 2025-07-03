@@ -1,5 +1,9 @@
 # I18nAdd
 
+[![Gem Version](https://badge.fury.io/rb/i18n_add.svg)](https://badge.fury.io/rb/i18n_add)
+[![CI](https://github.com/theExtraTerrestrial/i18n_add/workflows/CI/badge.svg)](https://github.com/theExtraTerrestrial/i18n_add/actions?query=workflow%3ACI)
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
+
 A command-line tool for adding and updating internationalization (i18n) translations in YAML files efficiently. Supports nested keys, multiple locales, and custom file paths.
 
 ## Installation

@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: github.repository == 'theExtraTerrestrial/i18n_add'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+    
+    - name: Build gem
+      run: gem build i18n_add.gemspec
+    
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+        body: |
+          See [CHANGELOG.md](https://github.com/theExtraTerrestrial/i18n_add/blob/master/CHANGELOG.md) for details.
+    
+    - name: Upload gem to release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./i18n_add-${{ github.ref_name }}.gem
+        asset_name: i18n_add-${{ github.ref_name }}.gem
+        asset_content_type: application/octet-stream
+    
+    # Uncomment when ready to auto-publish to RubyGems
+    # - name: Publish to RubyGems
+    #   run: |
+    #     mkdir -p ~/.gem
+    #     echo ":rubygems_api_key: ${{ secrets.RUBYGEMS_API_KEY }}" > ~/.gem/credentials
+    #     chmod 600 ~/.gem/credentials
+    #     gem push i18n_add-*.gem
