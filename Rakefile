@@ -1,11 +1,18 @@
 # frozen_string_literal: true
 
 require "bundler/gem_tasks"
+require "rake/testtask"
 require "rubocop/rake_task"
+
+Rake::TestTask.new(:test) do |t|
+  t.libs << "test"
+  t.libs << "lib"
+  t.test_files = FileList["test/**/*_test.rb"]
+end
 
 RuboCop::RakeTask.new
 
-task default: :rubocop
+task default: %i[test rubocop]
 
 # Version management tasks
 namespace :version do
@@ -34,7 +41,7 @@ end
 def bump_version(type)
   require_relative "lib/i18n_add/version"
   current = I18nAdd::VERSION
-  major, minor, patch = current.split('.').map(&:to_i)
+  major, minor, patch = current.split(".").map(&:to_i)
 
   case type
   when :patch
